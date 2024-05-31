@@ -241,7 +241,7 @@ namespace Licitacao.Controllers
                         modalidade = readerM["ID"].ToString();
                     }
 
-                    // Teste
+                    // Teste_ 2
                     qrySelectM.Dispose();
 
                     conexaoC2.Close();
