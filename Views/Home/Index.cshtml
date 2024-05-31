@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Licitação - ConnectPoint";
+}
+
+<div class="jumbotron">
+    <h1>ConnectPoint</h1>
+    <p class="lead">Rotina automática para busca das licitações em API Web applications.</p>
+    <p class="lead">Alimentando o Banco de dados DB_EDITAL</p>
+    <p><a href="https://app.connectpoint.com.br/" class="btn btn-primary btn-lg" target="_blank">AppConnectPoint &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Licitações encontradas na API</h2>
+        <p style="font-size: 24px;">@Session["total"].ToString()</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Licitações já importadas</h2>
+        <p style="font-size: 24px;">@Session["jaimportadas"].ToString()</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Novas Licitações</h2>
+        <p style="font-size: 24px;">@Session["novaslicitacoes"].ToString()</p>
+    </div>
+</div>
