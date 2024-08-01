@@ -193,7 +193,6 @@ namespace Licitacao.Controllers
             Palavras=Palavras.Substring(0, Palavras.Length-1);
             int Paginas = 0;
             var data_insercao = DateTime.Now.ToString("yyyy-MM-dd");
-            Palavras = "Engenharia";
             Repositorio r = new Repositorio();
             var x = r.GetLicitacoes(Palavras, Paginas, data_insercao);
 
