@@ -55,6 +55,44 @@ namespace Licitacao.Services
             return modelo;
         }
 
+        public async Task<Classificacao> GetClassificacao(string Objeto)
+        {
+            Classificacao classificacao = new Classificacao();
+
+            try
+            {
+                var uri = "";
+                using (_httpClient = new HttpClient())
+                {
+                   uri = "https://connectpoint.hellmrf.dev.br/classify?objeto=" + Objeto ;
+                   //_httpClient.DefaultRequestHeaders.Add("token", "0613f3ecb85f1084780866e7beb8f1c3");
+
+                    var result = _httpClient.GetAsync(uri).Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var content = await result.Content.ReadAsStringAsync();
+                        classificacao = JsonConvert.DeserializeObject<Classificacao>(content);
+                        return classificacao;
+                    }
+                    if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    {
+                        return null;
+                    }
+                    if (result.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return classificacao;
+        }
+
 
     }
 }

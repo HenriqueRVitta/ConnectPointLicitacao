@@ -245,6 +245,18 @@ namespace Licitacao.Controllers
 
                     conexaoC2.Close();
 
+                    string classAI = "0";
+
+                    /* Henrique 21/10/2024 09:30
+                       Buscando a Classificação do endpoint AI */
+                    var class_ = r.GetClassificacao(objeto);
+                    if(class_.Result.classification_id > 0)
+                    {
+
+                        classAI = class_.Result.classification_id.ToString();
+
+                    }
+
                     string uf = "";
 
                     conexaoC2.Open();
@@ -334,7 +346,7 @@ namespace Licitacao.Controllers
 
                     conexaoR2.Open();
 
-                    string Ins = "insert into tb_edital(ID_Cidade,ID_Estado,CaminhoAnexo,CodigoLicitacao,DataAbertura,DataPublicacao,EmailContato,FonteLicitacao,Modalidade,Nome,Objeto,Observacoes,OrgaoResponsavel,TelefoneContato,TipoLocalizacao,ValorLicitacao,ValorSigiloso,DataCadastro,DataEdicao,DataExclusao) values(@Cidade,@Estado,@Anexo,@Codigo,@Abertura,@Publicacao,@Email,@Licitacao,@Modalidade,@Nome,@Objeto,@Obs,@Responsavel,@Contato,@Localizacao,@Licitado,@Sigiloso,@Cadastro,@Edicao,@Exclusao)";
+                    string Ins = "insert into tb_edital(ID_Cidade,ID_Estado,CaminhoAnexo,CodigoLicitacao,DataAbertura,DataPublicacao,EmailContato,FonteLicitacao,Modalidade,Nome,Objeto,Observacoes,OrgaoResponsavel,TelefoneContato,TipoLocalizacao,ValorLicitacao,ValorSigiloso,DataCadastro,DataEdicao,DataExclusao,ID_Classificacao) values(@Cidade,@Estado,@Anexo,@Codigo,@Abertura,@Publicacao,@Email,@Licitacao,@Modalidade,@Nome,@Objeto,@Obs,@Responsavel,@Contato,@Localizacao,@Licitado,@Sigiloso,@Cadastro,@Edicao,@Exclusao,@classificacao)";
                     MySqlCommand qryInsert = new MySqlCommand(Ins, conexaoR2);
                     qryInsert = new MySqlCommand(Ins, conexaoR2);
                     if (municipio.Length>0)
@@ -345,6 +357,7 @@ namespace Licitacao.Controllers
                         qryInsert.Parameters.Add("@Estado", MySqlDbType.Int32).Value = Convert.ToInt32(uf);
                     else
                         qryInsert.Parameters.Add("@Estado", MySqlDbType.Int32).Value =null;
+
                     qryInsert.Parameters.Add("@Anexo", MySqlDbType.VarChar, 2083).Value = "";
                     qryInsert.Parameters.Add("@Codigo", MySqlDbType.VarChar, 255).Value = item.Id_licitacao;
                     qryInsert.Parameters.Add("@Abertura", MySqlDbType.DateTime).Value = Convert.ToDateTime(item.Abertura_datetime);
@@ -367,6 +380,7 @@ namespace Licitacao.Controllers
                     qryInsert.Parameters.Add("@Cadastro", MySqlDbType.DateTime).Value = DateTime.Now;
                     qryInsert.Parameters.Add("@Edicao", MySqlDbType.DateTime).Value = null;
                     qryInsert.Parameters.Add("@Exclusao", MySqlDbType.DateTime).Value = null;
+                    qryInsert.Parameters.Add("@classificacao", MySqlDbType.Int32).Value = Convert.ToInt32(classAI);
 
                     try
                     {
